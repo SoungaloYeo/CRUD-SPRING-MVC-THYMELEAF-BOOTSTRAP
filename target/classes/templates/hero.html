@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>gerer les hero</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{css/bootstrap.css}" rel='stylesheet' type='text/css' />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    </head>
+    <body >
+        <div class="container">
+            <div class="panel panel-success">
+                <div class="panel-heading"> 
+                    <h3> <b style="margin-left: 40%"> LISTE DES HERO</b> </h3>
+                </div>
+                <div class="panel-body">
+
+                    <!--******************************* enregistrer ou modifier un HERO **********************-->
+                    <div class="col-md-10 col-sm-10 col-xs-10 spacer col-md-offset-1">
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><b>AJOUTER / EDITER UN HERO</b></div>
+                            <div class="panel-body">
+                                <form th:action="@{/hero/add}" th:object="${hero}" method="post">
+                                    <input type="hidden" th:field="*{id}"/>
+                                    <div class="form-group">
+                                        <label class="control-label">Nom</label>
+                                        <input type="text" th:field="*{nom}" class="form-control" required="true"/>
+                                        <span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">NOM SUPER HERO</label>
+                                        <input type="text" th:field="*{nomSuperHero}" class="form-control" required="true"/>
+                                        <span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">PUISSANCE</label>
+                                        <input type="number" th:field="*{puissance}" class="form-control" required="true"/>
+                                        <span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">ATTAQUE PREFEREE</label>
+                                        <input type="text" th:field="*{attaquePreferee}" class="form-control" required="true"/>
+                                        <span></span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-9"></div>
+                                        <div class="col-sm-1">
+                                           <!-- <button type="submit" class="btn btn-warning"
+                                                    data-toggle="modal" data-target="#exampleModal"
+                                                    data-whatever="@getbootstrap"
+                                            >&nbsp;Enrg.&nbsp;
+                                            </button>-->
+                                            <button type="submit" class="btn btn-warning"
+                                                    name="btn-virement"
+                                                    data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">&nbsp;Enrg.&nbsp;
+                                            </button>
+
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <button type="button" class="btn btn-primary">Annuler</button>
+                                        </div>
+
+                                        <!--================================================== creation du modal ===================================================-->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-body alert-danger" style="text-align: center">
+                                                        <h3>confirmez le traitement </h3>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="reset" data-dismiss="modal" class="btn btn-primary btn-sm form-button">Annuler</button>
+                                                        <button type="submit" name="btnValider" value="btnValider" class="btn btn-danger">Confirmé</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--========================================================================================================-->
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--*************************************** affichage des donnees ********************-->
+                    <div class="row-table ">
+                        <table class="table table-striped">
+                            <input type="text" class="search" />
+                            <thead>
+                                <tr>
+                                    <th>NOM</th>
+                                    <th>NOM SUPER HERO</th>
+                                    <th>PUISSANCE</th>
+                                    <th>ATTAQUE PREFEREE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="list" th:each="h:${listHero}">
+                                    <td th:text="${h.nom}"> <p class="name"> test</p></td>
+                                    <td th:text="${h.nomSuperHero}"> <p class="name">autre</p></td>
+                                    <td th:text="${h.puissance}"></td>
+                                    <td th:text="${h.attaquePreferee}"></td>
+
+                                    <td ><a  th:href="@{show-edit(id=${h.id})}" >
+                                            <button class="btn btn-block btn-warning"><span class="glyphicon glyphicon-edit" /></button>
+                                        </a>
+                                    </td>
+                                    <td >
+                                        <a  th:href="@{delete(id=${h.id})}" >
+                                            <button class="btn btn-block btn-success"><span class="glyphicon glyphicon-erase" /></button>
+                                        </a>
+                                    </td>
+                                </tr>     
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>  
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    </body>
+</html>
